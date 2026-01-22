@@ -23,12 +23,29 @@
 
 <body>
 
-    <div class="app-container">
+    <div class="app-container" style="flex-wrap: wrap;">
+        <!-- TOP HEADER -->
+        <div id="intro-header" style="width: 100%; text-align: center; margin-bottom: 20px; color: var(--text-color);">
+            <h1 style="font-size: 1.5rem; color: #10b981; margin-bottom: 15px; text-transform: uppercase;">
+                Bài kiểm tra sức khỏe quản lý chi tiêu – Bạn đang dùng tiền hay bị tiền dẫn dắt?
+            </h1>
+            <p
+                style="font-size: 0.95rem; line-height: 1.6; max-width: 900px; margin: 0 auto; color: var(--text-muted); text-align: justify;">
+                Chi tiêu không chỉ là con số, mà là tấm gương phản chiếu thói quen, cảm xúc và mức độ làm chủ tài chính
+                của mỗi người.
+                Bài kiểm tra này giúp bạn nhìn thẳng vào cách mình đang sử dụng tiền hằng ngày: có kiểm soát hay theo
+                bản năng, có chủ động hay bị cuốn theo hoàn cảnh.
+                Không phán xét, không đúng–sai, bài test đóng vai trò như một bản chẩn đoán nhanh, để bạn biết mình đang
+                ở đâu trên hành trình xây dựng nền tảng tài chính vững vàng cho bản thân và gia đình. Bài kiểm tra gồm
+                10 câu hỏi, mỗi câu hỏi có 5 phương án trả lời với thang điểm 5/5.
+            </p>
+        </div>
         <!-- LEFT PANEL: RADAR CHART -->
         <div class="chart-panel">
-            <h2 class="chart-title"><i class="fa-solid fa-chart-pie"></i> 10 khía cạnh đánh giá CHI PHÍ cá nhân</h2>
+            <h2 class="chart-title"><i class="fa-solid fa-chart-pie"></i> 10 khía cạnh QUẢN LÝ CHI PHÍ
+            </h2>
             <div
-                style="position: relative; height: 100%; width: 100%; display: flex; justify-content: center; align-items: center;">
+                style="position: relative; height: 100%; width: 100%; min-height: 300px; display: flex; justify-content: center; align-items: center; padding: 10px;">
                 <canvas id="radarChart"></canvas>
             </div>
         </div>
@@ -39,12 +56,16 @@
             <!-- VIEW 1: LOGIN -->
             <div id="view-login" class="card login-view">
                 <h1>Bác Sĩ Tài Chính</h1>
-                <p style="color: var(--text-muted); margin: 1rem 0;">
-                    Đánh giá sức khỏe quản lý chi phí cá nhân của bạn qua 10 khía cạnh
-                </p>
+                <h2
+                    style="font-size: 1.1rem; color: var(--text-color); margin: 1rem 0; font-weight: 500; line-height: 1.5;">
+                    Đánh giá Năng lực quản lý chi tiêu thông qua 10 khía cạnh
+                </h2>
                 <div style="margin: 2rem 0;">
                     <i class="fa-solid fa-user-doctor" style="font-size: 4rem; color: var(--primary-color);"></i>
                 </div>
+                <p style="color: var(--text-color); margin-bottom: 1rem; font-size: 0.95rem;">
+                    Hãy điền thông tin của bạn để bắt đầu
+                </p>
                 <div class="login-form-container" style="max-width: 320px; margin: 0 auto;">
                     <input type="text" id="user-name" placeholder="Họ và tên của bạn" class="form-input" required>
                     <input type="email" id="user-email" placeholder="Địa chỉ Email" class="form-input" required>
@@ -68,10 +89,11 @@
             <!-- VIEW 2: INTRO/PRE-TEST (Hidden initially) -->
             <div id="view-intro" class="card hidden text-center">
                 <h2>Chào mừng, <span id="user-name-display" style="color: var(--primary-color)">Bạn</span></h2>
-                <p class="mb-4">Bài test gồm 10 khía cạnh. Mỗi khía cạnh gồm 2 bước:</p>
+                <p class="mb-4">Bài test gồm 10 câu hỏi, cho 10 khía cạnh. mỗi câu hỏi có 5 phương án trả lời với thang
+                    điểm 5/5. Mỗi khía cạnh gồm 2 bước:</p>
                 <ul style="text-align: left; margin: 0 auto 2rem; max-width: 320px; color: var(--text-muted);">
-                    <li class="mb-4">Bước 1. Bạn tự đánh giá năng lực bản thân</li>
-                    <li>Bước 2. Đánh giá dựa vào câu hỏi trắc nghiệm thực tế của bạn</li>
+                    <li class="mb-4">Bước 1. Đánh giá dựa vào câu hỏi trắc nghiệm thực tế của bạn</li>
+                    <li>Bước 2: Bạn tự đánh giá năng lực</li>
                 </ul>
                 <button id="btn-start" class="rating-btn" style="background: var(--primary-color); color: #0f172a;">
                     Bắt đầu ngay <i class="fa-solid fa-arrow-right"></i>
@@ -83,22 +105,23 @@
                 <div class="phase-header">
                     <div class="phase-badge">CÂU HỎI <span id="current-aspect-num">1</span>/10</div>
                     <h2 class="phase-title" id="current-aspect-name">NHẬN THỨC CHI TIÊU</h2>
-                    <div class="phase-subtitle">Bước 1: Tự đánh giá năng lực</div>
+                    <div class="phase-subtitle">Bước 2: Bạn tự đánh giá năng lực</div>
                 </div>
 
-                <h3 class="question-text">Bản thân bạn đánh giá mình được bao nhiêu điểm ở khía cạnh này?</h3>
+                <h3 class="question-text">Bản thân bạn tự đánh giá năng lực của bản thân ở khía cạnh này?
+                </h3>
 
                 <div class="rating-scale">
-                    <button class="rating-btn" data-score="1">1<br><span
-                            style="font-size:0.7rem; font-weight:400">Yếu</span></button>
-                    <button class="rating-btn" data-score="2">2<br><span
-                            style="font-size:0.7rem; font-weight:400">Kém</span></button>
-                    <button class="rating-btn" data-score="3">3<br><span
-                            style="font-size:0.7rem; font-weight:400">TB</span></button>
-                    <button class="rating-btn" data-score="4">4<br><span
-                            style="font-size:0.7rem; font-weight:400">Khá</span></button>
-                    <button class="rating-btn" data-score="5">5<br><span
-                            style="font-size:0.7rem; font-weight:400">Tốt</span></button>
+                    <button class="rating-btn" data-score="1"><span
+                            style="font-size:1rem; font-weight:700">YẾU</span></button>
+                    <button class="rating-btn" data-score="2"><span
+                            style="font-size:1rem; font-weight:700">KÉM</span></button>
+                    <button class="rating-btn" data-score="3"><span style="font-size:1rem; font-weight:700">TRUNG
+                            BÌNH</span></button>
+                    <button class="rating-btn" data-score="4"><span
+                            style="font-size:1rem; font-weight:700">KHÁ</span></button>
+                    <button class="rating-btn" data-score="5"><span
+                            style="font-size:1rem; font-weight:700">TỐT</span></button>
                 </div>
             </div>
 
@@ -107,7 +130,7 @@
                 <div class="phase-header">
                     <div class="phase-badge">CÂU HỎI <span id="quiz-aspect-num">1</span>/10</div>
                     <h2 class="phase-title" id="quiz-aspect-name">...</h2>
-                    <div class="phase-subtitle">Bước 2: Trắc nghiệm thực tế</div>
+                    <div class="phase-subtitle">Bước 1: Đánh giá dựa vào câu hỏi trắc nghiệm thực tế</div>
                 </div>
 
                 <h3 id="quiz-question" class="question-text">...</h3>

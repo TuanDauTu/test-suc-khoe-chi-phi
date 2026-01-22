@@ -77,10 +77,20 @@ function initChart() {
                 pointBorderColor: '#fff',
                 pointHoverBackgroundColor: '#fff',
                 pointHoverBorderColor: '#f59e0b',
-                hidden: false // Show initially so legend is not strikethrough
+                hidden: false
             }]
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    top: 20,
+                    bottom: 20,
+                    left: 20,
+                    right: 40
+                }
+            },
             elements: {
                 line: { borderWidth: 3 }
             },
@@ -90,29 +100,39 @@ function initChart() {
                     grid: { color: 'rgba(255, 255, 255, 0.1)' },
                     pointLabels: {
                         color: (context) => {
-                            // Highlight current aspect
                             if (currentState.user && context.index === currentState.step) {
-                                return '#10b981'; // Green highlight
+                                return '#10b981';
                             }
-                            return '#94a3b8'; // Muted
+                            return '#94a3b8';
                         },
                         font: {
-                            size: 14, // Increased size
-                            weight: 'bold', // Bold
-                            family: "'Inter', sans-serif"
+                            size: 11,
+                            family: "'Inter', sans-serif",
+                            weight: 'bold'
                         }
                     },
                     suggestedMin: 0,
                     suggestedMax: 5,
                     ticks: {
                         stepSize: 1,
-                        display: false // Hide numbers for cleaner look
+                        display: false, // Hide numbers
+                        backdropColor: 'transparent'
                     }
                 }
             },
             plugins: {
                 legend: {
-                    labels: { color: '#f8fafc' }
+                    position: 'bottom',
+                    align: 'center',
+                    labels: {
+                        color: '#f8fafc',
+                        padding: 40, // Increased spacing from chart
+                        font: {
+                            family: "'Inter', sans-serif",
+                            size: 14, // Larger font
+                            weight: 'bold' // Bold text
+                        }
+                    }
                 }
             }
         }
@@ -146,7 +166,7 @@ function handleLogin() {
 function startTest() {
     currentState.startTime = new Date();
     currentState.step = 0;
-    currentState.subStep = 'self';
+    currentState.subStep = 'quiz'; // Start with Quiz first
 
     // Show Actual dataset now
     // radarChart.data.datasets[1].hidden = false; // it is already visible now
@@ -168,19 +188,19 @@ function loadStep() {
     radarChart.update();
 
     if (currentState.subStep === 'self') {
-        // Show Self Assess View
+        // Show Self Assess View (Step 2)
         switchView('selfAssess');
         document.getElementById('current-aspect-num').innerText = currentState.step + 1;
-        document.getElementById('current-aspect-name').innerText = aspect.name;
+        document.getElementById('current-aspect-name').innerText = "Đánh giá: " + aspect.name;
 
         // Reset buttons
         document.querySelectorAll('.rating-btn').forEach(btn => btn.style.background = '');
 
     } else {
-        // Show Quiz View
+        // Show Quiz View (Step 1)
         switchView('quiz');
         document.getElementById('quiz-aspect-num').innerText = currentState.step + 1;
-        document.getElementById('quiz-aspect-name').innerText = aspect.name;
+        document.getElementById('quiz-aspect-name').innerText = "Đánh giá: " + aspect.name;
         document.getElementById('quiz-question').innerText = aspect.question;
 
         const optionsContainer = document.getElementById('quiz-options');
@@ -206,11 +226,14 @@ function handleSelfAssess(score) {
     radarChart.data.datasets[0].data = currentState.selfScores;
     radarChart.update();
 
-    // Move to next sub-step after brief delay
-    setTimeout(() => {
-        currentState.subStep = 'quiz';
-        loadStep();
-    }, 300);
+    // Move to NEXT QUESTION or FINISH
+    if (currentState.step < 9) {
+        currentState.step++;
+        currentState.subStep = 'quiz'; // Next question starts with Quiz
+        setTimeout(() => loadStep(), 300);
+    } else {
+        finishTest();
+    }
 }
 
 function handleQuizAnswer(score) {
@@ -220,14 +243,11 @@ function handleQuizAnswer(score) {
     radarChart.data.datasets[1].data = currentState.actualScores;
     radarChart.update();
 
-    // Check if next step exists
-    if (currentState.step < 9) {
-        currentState.step++;
+    // Move to SELF ASSESS (Step 2)
+    setTimeout(() => {
         currentState.subStep = 'self';
-        setTimeout(() => loadStep(), 300);
-    } else {
-        finishTest();
-    }
+        loadStep();
+    }, 300);
 }
 
 function finishTest() {
@@ -408,4 +428,16 @@ function switchView(viewName) {
     views[viewName].style.animation = 'none';
     views[viewName].offsetHeight; /* trigger reflow */
     views[viewName].style.animation = 'fadeIn 0.5s ease-out';
+
+    // Handle Header Visibility
+    const header = document.getElementById('intro-header');
+    const container = document.querySelector('.app-container');
+
+    if (viewName === 'quiz' || viewName === 'selfAssess' || viewName === 'result') {
+        if (header) header.style.display = 'none';
+        if (container) container.style.alignItems = 'center'; // Center vertically when header is gone
+    } else {
+        if (header) header.style.display = 'block';
+        if (container) container.style.alignItems = 'flex-start'; // Top align when header is present
+    }
 }
