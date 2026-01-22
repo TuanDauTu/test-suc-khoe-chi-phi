@@ -33,8 +33,7 @@ const views = {
     intro: document.getElementById('view-intro'),
     selfAssess: document.getElementById('view-self-assess'),
     quiz: document.getElementById('view-quiz'),
-    result: document.getElementById('view-result'),
-    history: document.getElementById('view-history')
+    result: document.getElementById('view-result')
 };
 
 // INITIALIZATION
@@ -50,18 +49,12 @@ function setupEventListeners() {
     // Start Test
     document.getElementById('btn-start').addEventListener('click', startTest);
 
-    // History
-    const btnHistory = document.getElementById('btn-history');
-    if (btnHistory) btnHistory.addEventListener('click', handleHistory);
 
-    const btnBackIntro = document.getElementById('btn-back-intro');
-    if (btnBackIntro) btnBackIntro.addEventListener('click', handleBackToIntro);
 
     // Quick Answer
     document.getElementById('btn-quick-answer').addEventListener('click', handleQuickAnswer);
 
-    // View History
-    document.getElementById('btn-view-history').addEventListener('click', handleHistory);
+
 
     // Self Assessment Buttons
     document.querySelectorAll('#view-self-assess .rating-btn').forEach(btn => {
@@ -621,123 +614,4 @@ function switchView(viewName) {
     }
 }
 
-// === HISTORY & PROGRESS FEATURES ===
 
-function handleHistory() {
-    if (!currentState.user || !currentState.user.email) {
-        alert("Vui lòng đăng nhập trước!");
-        return;
-    }
-
-    const btnViewHistory = document.getElementById('btn-view-history');
-    let originalText = '';
-    if (btnViewHistory) {
-        originalText = btnViewHistory.innerHTML;
-        btnViewHistory.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang tải...';
-        btnViewHistory.disabled = true;
-    }
-
-    // Call Backend trực tiếp
-    const url = `${GOOGLE_SCRIPT_URL}?action=getHistory&email=${encodeURIComponent(currentState.user.email)}`;
-
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            if (btnViewHistory) {
-                btnViewHistory.innerHTML = originalText;
-                btnViewHistory.disabled = false;
-            }
-
-            if (data.history && data.history.length > 0) {
-                switchView('history');
-                renderHistoryChart(data.history);
-            } else {
-                alert("Bạn chưa có lịch sử kiểm tra nào.");
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            if (btnViewHistory) {
-                btnViewHistory.innerHTML = originalText;
-                btnViewHistory.disabled = false;
-            }
-            alert("Không thể tải lịch sử. Vui lòng thử lại sau.");
-        });
-}
-
-let historyChartInstance = null;
-
-function renderHistoryChart(historyData) {
-    const ctx = document.getElementById('historyChart').getContext('2d');
-
-    // Sort by date just in case
-    historyData.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-    const labels = historyData.map(item => {
-        const d = new Date(item.date);
-        return `${d.getDate()}/${d.getMonth() + 1}`;
-    });
-
-    const dataPoints = historyData.map(item => item.total);
-
-    if (historyChartInstance) {
-        historyChartInstance.destroy();
-    }
-
-    historyChartInstance = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Điểm Tổng (Thang 50)',
-                data: dataPoints,
-                borderColor: '#10b981',
-                backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                borderWidth: 3,
-                tension: 0.3,
-                pointRadius: 6,
-                pointHoverRadius: 8,
-                pointBackgroundColor: '#fff',
-                pointBorderColor: '#10b981',
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    labels: { color: '#f8fafc', font: { family: "'Inter', sans-serif" } }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 50,
-                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                    ticks: { color: '#94a3b8' }
-                },
-                x: {
-                    grid: { display: false },
-                    ticks: { color: '#94a3b8' }
-                }
-            }
-        }
-    });
-
-    // Hiển thị tiến bộ
-    let progressText = '';
-    if (dataPoints.length > 1) {
-        const latest = dataPoints[dataPoints.length - 1];
-        const previous = dataPoints[dataPoints.length - 2];
-        const change = latest - previous;
-        progressText = `Tiến bộ: ${change > 0 ? '+' : ''}${change} điểm so với lần trước`;
-    } else {
-        progressText = 'Đây là lần test đầu tiên của bạn!';
-    }
-    document.getElementById('progress-text').innerText = progressText;
-}
-
-function handleBackToIntro() {
-    switchView('intro');
-}
