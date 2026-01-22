@@ -43,6 +43,7 @@ h1 {
     font-size: 2.5rem;
     background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -331,4 +332,99 @@ h1 {
 ::-webkit-scrollbar-thumb {
     background: var(--surface-border);
     border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
+
+/* INSIGHT CARDS (Blind Spot & Low Esteem) */
+.insight-card {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border-left: 4px solid transparent;
+}
+
+.blind-spot {
+    background: rgba(239, 68, 68, 0.1);
+    border-left-color: #ef4444;
+}
+
+.blind-spot h4 {
+    color: #ef4444;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.low-esteem {
+    background: rgba(59, 130, 246, 0.1);
+    border-left-color: #3b82f6;
+}
+
+.low-esteem h4 {
+    color: #3b82f6;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.insight-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    font-style: italic;
+}
+
+.insight-list {
+    margin-left: 1.2rem;
+    color: var(--text-main);
+}
+
+.insight-list li {
+    margin-bottom: 0.25rem;
+}
+
+/* EDUCATIONAL TOOLTIP */
+#edu-tooltip {
+    position: absolute;
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f8fafc;
+    padding: 1.25rem;
+    border-radius: 12px;
+    width: 400px;
+    max-width: 90vw;
+    z-index: 1000;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+#edu-title {
+    color: #10b981;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+.edu-content strong {
+    color: #cbd5e1;
+}
+
+.edu-content span {
+    color: #94a3b8;
+}
+
+@media (max-width: 640px) {
+    #edu-tooltip {
+        width: 90%;
+        left: 5% !important;
+        top: auto !important;
+        bottom: 20px !important;
+        position: fixed;
+    }
 }

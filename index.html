@@ -44,6 +44,10 @@
         <div class="chart-panel">
             <h2 class="chart-title"><i class="fa-solid fa-chart-pie"></i> 10 khía cạnh QUẢN LÝ CHI PHÍ
             </h2>
+            <p
+                style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: -15px; margin-bottom: 15px; font-style: italic;">
+                (Trỏ chuột vào từng khía cạnh để hiểu ý nghĩa và nguyên nhân điểm thấp)
+            </p>
             <div
                 style="position: relative; height: 100%; width: 100%; min-height: 300px; display: flex; justify-content: center; align-items: center; padding: 10px;">
                 <canvas id="radarChart"></canvas>
@@ -131,6 +135,7 @@
                     <div class="phase-badge">CÂU HỎI <span id="quiz-aspect-num">1</span>/10</div>
                     <h2 class="phase-title" id="quiz-aspect-name">...</h2>
                     <div class="phase-subtitle">Bước 1: Đánh giá dựa vào câu hỏi trắc nghiệm thực tế</div>
+                    <button id="btn-quick-answer" style="background: #f59e0b; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; margin-top: 10px;">Trả lời nhanh</button>
                 </div>
 
                 <h3 id="quiz-question" class="question-text">...</h3>
@@ -140,11 +145,28 @@
                 </div>
             </div>
 
+            <!-- VIEW 6: HISTORY CHART -->
+            <div id="view-history" class="card hidden">
+                <div class="results-header">
+                    <button id="btn-back-intro"
+                        style="float: left; background: none; border: none; color: var(--text-muted); cursor: pointer;">
+                        <i class="fa-solid fa-arrow-left"></i> Quay lại
+                    </button>
+                    <h2>Lịch sử Tiến bộ</h2>
+                    <p style="color: var(--text-muted)">Hành trình tài chính của bạn</p>
+                </div>
+                <div style="height: 300px; padding: 10px;">
+                    <canvas id="historyChart"></canvas>
+                </div>
+                <p id="progress-text" style="text-align: center; margin-top: 10px; font-weight: bold; color: var(--primary-color);"></p>
+            </div>
+
             <!-- VIEW 5: RESULTS -->
             <div id="view-result" class="card hidden" style="max-height: 80vh; overflow-y: auto;">
                 <div class="results-header">
                     <h2>Đơn Thuốc Tài Chính</h2>
                     <p style="color: var(--text-muted)">Kết quả chẩn đoán của bạn</p>
+                    <button id="btn-view-history" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; margin-top: 10px;">Xem lịch sử tiến bộ</button>
                 </div>
 
                 <div class="score-summary">
@@ -158,16 +180,11 @@
                     </div>
                 </div>
 
-                <div id="praise-section" class="mb-4">
-                    <h3 style="color: var(--primary-color)"><i class="fa-solid fa-thumbs-up"></i> Điểm Mạnh</h3>
-                    <ul id="praise-list" style="margin-left: 1.5rem; color: var(--text-main);"></ul>
-                </div>
+                <!-- Detailed Status Analysis (Green/Yellow/Red) -->
+                <div id="detailed-results" class="mb-4"></div>
 
-                <div id="weakness-section" class="mb-4">
-                    <h3 style="color: var(--danger-color)"><i class="fa-solid fa-triangle-exclamation"></i> Điểm chưa
-                        tốt</h3>
-                    <ul id="weakness-list-display" style="margin-left: 1.5rem; color: var(--text-main);"></ul>
-                </div>
+                <!-- Blind Spot & Low Esteem Analysis -->
+                <div id="gap-analysis"></div>
 
                 <hr style="border-color: var(--surface-border); margin: 1.5rem 0;">
 
@@ -201,6 +218,14 @@
     </div>
 
     <!-- Scripts -->
+    <!-- Tooltip -->
+    <div id="edu-tooltip" class="hidden">
+        <h4 id="edu-title">Tiêu đề</h4>
+        <div class="edu-content">
+            <p><strong>💡 Ý nghĩa:</strong> <span id="edu-meaning">...</span></p>
+            <p style="margin-top: 8px;"><strong>📉 Điểm thấp do:</strong> <span id="edu-cause">...</span></p>
+        </div>
+    </div>
     <script src="js/data.js"></script>
     <script src="js/app.js"></script>
 </body>
