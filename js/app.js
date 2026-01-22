@@ -56,12 +56,15 @@ function setupEventListeners() {
 
 
 
-    // Self Assessment Buttons
-    document.querySelectorAll('#view-self-assess .rating-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+    // Self Assessment Buttons (Event Delegation)
+    document.getElementById('view-self-assess').addEventListener('click', (e) => {
+        const btn = e.target.closest('.rating-btn');
+        if (btn) {
             const score = parseInt(btn.dataset.score);
-            handleSelfAssess(score);
-        });
+            if (!isNaN(score)) {
+                handleSelfAssess(score);
+            }
+        }
     });
 }
 
@@ -335,6 +338,38 @@ function handleQuizAnswer(score) {
         currentState.subStep = 'self';
         loadStep();
     }, 300);
+}
+
+function handleSelfAssess(score) {
+    console.log("handleSelfAssess triggered with score:", score);
+    try {
+        if (typeof score !== 'number' || isNaN(score)) {
+            console.error("Invalid score:", score);
+            return;
+        }
+
+        currentState.selfScores[currentState.step] = score;
+
+        // Update Chart Realtime
+        if (radarChart && radarChart.data && radarChart.data.datasets[0]) {
+            radarChart.data.datasets[0].data = currentState.selfScores;
+            radarChart.update();
+        } else {
+            console.warn("RadarChart not ready");
+        }
+
+        // Move to Next Step or Finish
+        if (currentState.step < ASPECTS.length - 1) {
+            currentState.step++;
+            currentState.subStep = 'quiz';
+            loadStep();
+        } else {
+            finishTest();
+        }
+    } catch (e) {
+        console.error("Error in handleSelfAssess:", e);
+        alert("Có lỗi xảy ra: " + e.message);
+    }
 }
 
 function finishTest() {
