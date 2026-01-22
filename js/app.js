@@ -1,5 +1,5 @@
 // CONFIGURATION
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLy4vIUsDSukVPljFrCj9zU2UI0yzghxtJjrtnJwD_J8jSrTM_R9Z9fubsbwcmBkUe/exec"; // User to fill this
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxGWXMbBfKbkTkhPKF04ysGFX0cwMQ-ZS1ngAfTcBp1qLLitrc_v9DBIAC7CneGVrsA/exec"; // User to fill this
 // Client-side API Key removed for security. Backend handles AI calls.
 
 // STATE
@@ -637,37 +637,31 @@ function handleHistory() {
         btnViewHistory.disabled = true;
     }
 
-    // Call Backend bằng POST
-    fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            action: 'getHistory',
-            email: currentState.user.email
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (btnViewHistory) {
-            btnViewHistory.innerHTML = originalText;
-            btnViewHistory.disabled = false;
-        }
+    // Call Backend bằng GET để lấy lịch sử, tránh lỗi CORS
+    const url = `${GOOGLE_SCRIPT_URL}?action=getHistory&email=${encodeURIComponent(currentState.user.email)}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (btnViewHistory) {
+                btnViewHistory.innerHTML = originalText;
+                btnViewHistory.disabled = false;
+            }
 
-        if (data.history && data.history.length > 0) {
-            switchView('history');
-            renderHistoryChart(data.history);
-        } else {
-            alert("Bạn chưa có lịch sử kiểm tra nào.");
-        }
-    })
-    .catch(error => {
-        console.error(error);
-        if (btnViewHistory) {
-            btnViewHistory.innerHTML = originalText;
-            btnViewHistory.disabled = false;
-        }
-        alert("Không thể tải lịch sử. Vui lòng thử lại sau.");
-    });
+            if (data.history && data.history.length > 0) {
+                switchView('history');
+                renderHistoryChart(data.history);
+            } else {
+                alert("Bạn chưa có lịch sử kiểm tra nào.");
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            if (btnViewHistory) {
+                btnViewHistory.innerHTML = originalText;
+                btnViewHistory.disabled = false;
+            }
+            alert("Không thể tải lịch sử. Vui lòng thử lại sau.");
+        });
 }
 
 let historyChartInstance = null;
