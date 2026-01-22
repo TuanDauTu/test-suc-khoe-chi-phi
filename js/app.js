@@ -316,16 +316,16 @@ function loadStep() {
 
 function handleQuickAnswer() {
     addLog('Quick Answer Used');
-    
+
     // Giả lập điểm số
     currentState.actualScores = [3, 4, 3, 4, 3, 4, 3, 4, 3, 4]; // Điểm thực tế giả lập
     currentState.selfScores = [3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; // Tự đánh giá giả lập
-    
+
     // Cập nhật chart
     radarChart.data.datasets[0].data = currentState.selfScores;
     radarChart.data.datasets[1].data = currentState.actualScores;
     radarChart.update();
-    
+
     // Chuyển đến kết quả
     finishTest();
 }
@@ -507,7 +507,7 @@ async function callGeminiAnalysis(weaknesses) {
 
     // REAL CALL (If Key Provided)
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -637,9 +637,9 @@ function handleHistory() {
         btnViewHistory.disabled = true;
     }
 
-    // Call Backend bằng GET qua proxy để bypass CORS khi test
-    const directUrl = `${GOOGLE_SCRIPT_URL}?action=getHistory&email=${encodeURIComponent(currentState.user.email)}`;
-    const url = `https://corsproxy.io/?${encodeURIComponent(directUrl)}`;
+    // Call Backend trực tiếp
+    const url = `${GOOGLE_SCRIPT_URL}?action=getHistory&email=${encodeURIComponent(currentState.user.email)}`;
+
     fetch(url)
         .then(response => response.json())
         .then(data => {
