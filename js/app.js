@@ -637,8 +637,9 @@ function handleHistory() {
         btnViewHistory.disabled = true;
     }
 
-    // Call Backend bằng GET để lấy lịch sử, tránh lỗi CORS
-    const url = `${GOOGLE_SCRIPT_URL}?action=getHistory&email=${encodeURIComponent(currentState.user.email)}`;
+    // Call Backend bằng GET qua proxy để bypass CORS khi test
+    const directUrl = `${GOOGLE_SCRIPT_URL}?action=getHistory&email=${encodeURIComponent(currentState.user.email)}`;
+    const url = `https://corsproxy.io/?${encodeURIComponent(directUrl)}`;
     fetch(url)
         .then(response => response.json())
         .then(data => {
