@@ -1,5 +1,5 @@
 // CONFIGURATION
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxGWXMbBfKbkTkhPKF04ysGFX0cwMQ-ZS1ngAfTcBp1qLLitrc_v9DBIAC7CneGVrsA/exec"; // User to fill this
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvNDxT_0DjhkVfKbcGD_EO7fmji8pB1__Bt9OVJk7OMGjQWUqzQt2Prg-mYCo8AyZm/exec"; // User to fill this
 // Client-side API Key removed for security. Backend handles AI calls.
 
 // STATE

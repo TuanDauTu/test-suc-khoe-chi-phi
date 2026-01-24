@@ -85,7 +85,7 @@ const ASPECTS = [
     },
     {
         id: "non_essential",
-        name: "Chi phí không thiết yếu",
+        name: "Chi phí Không thiết yếu",
         question: "Chi phí KHÔNG THIẾT YẾU chiếm bao nhiêu % thu nhập? (Là những khoản chi tiêu không bắt buộc, mang tính tùy ý, giải trí. Ví dụ như: Đi du lịch, ăn nhà hàng, mua sắm không cấp bách)",
         meaning: "Khía cạnh này phản ánh phong cách sống và mức độ hưởng thụ của bạn. Nó không xấu, nhưng cần sự cân bằng. Kiểm soát tốt chi phí không thiết yếu cho thấy bạn biết ưu tiên giá trị tương lai hơn là những niềm vui tức thời, đồng thời vẫn biết cách tận hưởng cuộc sống một cách hợp lý.",
         lowScoreCause: "Hội chứng FOMO (Sợ bỏ lỡ), tâm lý muốn thể hiện bản thân (Flexing) hoặc thói quen xã giao, tiệc tùng quá đà là những thủ phạm chính. Việc thiếu các mục tiêu tài chính lớn cũng khiến người ta dễ dàng 'vung tay quá trán' cho những thú vui nhất thời.",
