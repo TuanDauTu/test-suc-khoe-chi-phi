@@ -214,10 +214,14 @@ h1 {
     justify-content: space-between;
     gap: 0.5rem;
     margin-top: 1rem;
+    flex-wrap: wrap;
+    /* Allow wrapping */
 }
 
 .rating-btn {
     flex: 1;
+    min-width: 80px;
+    /* Prevent too much shrinking */
     padding: 1rem;
     border-radius: 12px;
     border: 1px solid var(--surface-border);
@@ -227,6 +231,21 @@ h1 {
     transition: all 0.2s;
     font-size: 1.25rem;
     font-weight: 700;
+}
+
+@media (max-width: 640px) {
+    .rating-btn {
+        padding: 0.75rem 0.5rem;
+        /* Smaller padding */
+        min-width: 45%;
+        /* 2 buttons per row or fits */
+        flex: 1 1 40%;
+    }
+
+    /* Override inline font-size */
+    .rating-btn span {
+        font-size: 0.9rem !important;
+    }
 }
 
 .rating-btn:hover {

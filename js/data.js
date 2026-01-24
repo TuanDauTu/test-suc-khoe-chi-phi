@@ -8,9 +8,9 @@ const ASPECTS = [
         options: [
             { text: "Không bao giờ", score: 1 },
             { text: "Thỉnh thoảng tổng kết chi tiêu tháng nhưng không ghi chép lại tổng kết.", score: 2 },
-            { text: "Thỉnh thoảng tổng kết chi tiêu tháng, CÓ GHI CHÉP LAI", score: 3 },
+            { text: "Thỉnh thoảng tổng kết chi tiêu tháng, CÓ GHI CHÉP LẠI", score: 3 },
             { text: "Luôn tổng kết chi tiêu tháng nhưng không ghi chép lại", score: 4 },
-            { text: "Luôn tổng kết chi tiêu tháng và CÓ GHI CHÉP LAI", score: 5 }
+            { text: "Luôn tổng kết chi tiêu tháng và CÓ GHI CHÉP LẠI", score: 5 }
         ]
     },
     {

@@ -124,10 +124,15 @@ function initChart() {
                             return '#94a3b8'; // Grey for default
                         },
                         font: (context) => {
+                            const width = window.innerWidth;
+                            const isMobile = width < 640;
+                            // Dynamic font size
+                            const fontSize = isMobile ? 9 : 11;
+
                             if (currentState.user && context.index === currentState.step) {
-                                return { size: 14, weight: 'bold', family: "'Inter', sans-serif" };
+                                return { size: isMobile ? 11 : 14, weight: 'bold', family: "'Inter', sans-serif" };
                             }
-                            return { size: 11, family: "'Inter', sans-serif", weight: 'bold' };
+                            return { size: fontSize, family: "'Inter', sans-serif", weight: 'bold' };
                         }
                     },
                     suggestedMin: 0,
@@ -145,10 +150,10 @@ function initChart() {
                     align: 'center',
                     labels: {
                         color: '#f8fafc',
-                        padding: 40,
+                        padding: window.innerWidth < 640 ? 10 : 40, // Reduce padding on mobile
                         font: {
                             family: "'Inter', sans-serif",
-                            size: 14,
+                            size: window.innerWidth < 640 ? 10 : 14,
                             weight: 'bold'
                         }
                     }
