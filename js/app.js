@@ -68,13 +68,23 @@ function setupEventListeners() {
     });
 }
 
+const SHORT_ASPECT_NAMES = [
+    "Tổng kết", "Ghi chép", "Kế hoạch", "Kỷ luật", "Cảm xúc",
+    "Thiết yếu", "Giải trí", "Tỷ lệ Chi tiêu", "Cắt giảm", "Quản lý"
+];
+
 function initChart() {
     const ctx = document.getElementById('radarChart').getContext('2d');
+    const isMobile = window.innerWidth < 640;
 
     radarChart = new Chart(ctx, {
         type: 'radar',
         data: {
-            labels: ASPECTS.map((a, i) => `${i + 1}. ${a.name}`),
+            // Mobile: Use Short Names | Desktop: Use Full Names
+            labels: ASPECTS.map((a, i) => {
+                const name = isMobile ? SHORT_ASPECT_NAMES[i] : a.name;
+                return `${i + 1}. ${name}`;
+            }),
             datasets: [{
                 label: 'Tự đánh giá',
                 data: currentState.selfScores,

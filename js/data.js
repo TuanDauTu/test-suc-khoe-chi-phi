@@ -1,7 +1,7 @@
 const ASPECTS = [
     {
         id: "awareness",
-        name: "Tổng kết chi tiêu hàng tháng",
+        name: "Tổng kết chi tiêu",
         question: "Bạn có tổng kết chi tiêu mỗi tháng không? Biết 3 tháng gần đây chi tiêu như thế nào.",
         meaning: "Khía cạnh này không chỉ đơn thuần là việc cộng trừ các con số, mà nó đo lường mức độ 'tỉnh thức' và minh bạch của bạn đối với dòng tiền cá nhân. Việc biết chính xác tiền đi đâu giúp bạn phá vỡ ảo tưởng 'mình tiêu ít lắm' và đối diện với thực tế, từ đó mới có cơ sở để điều chỉnh hành vi tiêu dùng một cách hiệu quả.",
         lowScoreCause: "Nguyên nhân thường đến từ tâm lý sợ hãi (Financial Fear) - sợ phải nhìn thấy số tiền mình đã phung phí, hoặc do thói quen trì hoãn, lười biếng. Nhiều người cũng có tâm lý 'mắt không thấy thì tim không đau' nên chọn cách lờ đi việc tổng kết.",
@@ -29,7 +29,7 @@ const ASPECTS = [
     },
     {
         id: "budgeting",
-        name: "Lập kế hoạch chi tiêu đầu tháng",
+        name: "Lập kế hoạch chi tiêu",
         question: "Bạn có lập kế hoạch chi tiêu trước khi bước vào tháng mới không?",
         meaning: "Khía cạnh này phản ánh tư duy chủ động: Bạn bảo tiền phải đi đâu thay vì hỏi tiền đã đi đâu mất rồi. Lập ngân sách (Budgeting) giống như việc vẽ bản đồ cho chuyến đi, giúp bạn phân bổ nguồn lực hữu hạn cho những mục tiêu quan trọng nhất, tránh tình trạng 'đầu tháng vung tay, cuối tháng vay mượn'.",
         lowScoreCause: "Nhiều người không lập ngân sách vì tư duy 'nước đến chân mới nhảy', sống ngày nào biết ngày đó. Một số khác lại cho rằng lập kế hoạch là tự trói buộc bản thân, làm mất đi sự tự do và niềm vui trong việc tiêu tiền, hoặc đơn giản là họ chưa bao giờ được hướng dẫn cách lập một ngân sách khả thi.",
@@ -43,7 +43,7 @@ const ASPECTS = [
     },
     {
         id: "discipline",
-        name: "Giữ kỷ luật trong chi tiêu",
+        name: "Giữ kỷ luật chi tiêu",
         question: "Khi chi tiêu vượt kế hoạch, Bạn thường phản ứng thế nào?",
         meaning: "Đây là thước đo sức mạnh ý chí và cam kết của bạn trước những cám dỗ tiêu dùng. Một kế hoạch dù hoàn hảo đến đâu cũng vô nghĩa nếu thiếu kỷ luật thực thi. Khả năng nói 'KHÔNG' với những ham muốn nhất thời để bảo vệ mục tiêu dài hạn chính là phẩm chất cốt lõi của người giàu có bền vững.",
         lowScoreCause: "Sự nuông chiều bản thân quá mức (YOLO - You Only Live Once) và thiếu mục tiêu tài chính đủ lớn là nguyên nhân chính. Khi không có động lực rõ ràng (như mua nhà, nghỉ hưu sớm), người ta dễ dàng thỏa hiệp với bản thân và phá vỡ các quy tắc đã đặt ra khi đứng trước một món đồ yêu thích.",
@@ -99,8 +99,8 @@ const ASPECTS = [
     },
     {
         id: "value_vs_desire",
-        name: "Tỷ lệ chi tiêu/Thu nhập",
-        question: "Tổng chi tiêu của Bạn chiếm bao nhiêu % thu nhập?",
+        name: "Chi tiêu/Thu nhập",
+        question: "Tổng Chi tiêu của Bạn chiếm bao nhiêu % thu nhập?",
         meaning: "Đây là chỉ số sức khỏe dòng tiền tổng quát quan trọng nhất, quyết định tốc độ làm giàu của bạn. Nó thể hiện khả năng giữ tiền (Saving Rate). Kiếm được bao nhiêu không quan trọng bằng việc bạn giữ lại được bao nhiêu. Tỷ lệ này càng thấp, bạn càng sớm đạt được tự do tài chính.",
         lowScoreCause: "Thu nhập quá thấp không đủ trang trải mức sống tối thiểu, hoặc khả năng quản lý tài chính yếu kém dẫn đến chi tiêu vượt quá thu nhập (lạm chi). Sự thiếu hụt quỹ dự phòng cũng khiến bạn phải vay mượn khi có việc gấp, làm trầm trọng thêm tình trạng thâm hụt ngân sách.",
         options: [
@@ -127,7 +127,7 @@ const ASPECTS = [
     },
     {
         id: "system",
-        name: "Hệ thống quản lý chi tiêu",
+        name: "Quản lý chi tiêu",
         question: "Bạn đang quản lý chi tiêu bằng cách nào?",
         meaning: "Đây là cấp độ cao nhất của quản lý tài chính cá nhân: Chuyên nghiệp hóa và Tự động hóa. Một hệ thống tốt giúp bạn quản lý tiền bạc một cách nhẹ nhàng, không tốn sức, giảm thiểu sai sót do con người và đảm bảo mọi thứ vận hành trơn tru ngay cả khi bạn bận rộn nhất.",
         lowScoreCause: "Thường do tư duy làm việc thủ công, tùy hứng, không chịu cập nhật công nghệ hoặc học hỏi các phương pháp quản lý khoa học (như 6 chiếc lọ, 50/30/20). Nhiều người ngại thay đổi thói quen cũ, chấp nhận sự lộn xộn thay vì dành thời gian xây dựng một hệ thống bài bản.",
